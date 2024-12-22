@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>2.3 The CacheManager 7.0.0</title>
+    <title>2.3 The CacheManager 8.0.0-M1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -28,7 +28,7 @@ function addJsClass() {
 <div id="navigation">
     <div class="navTitle">
         
-        Cache Plugin
+        Grails Cache Plugin
     </div>
     <div class="navLinks">
         <ul>
@@ -84,7 +84,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>2.3 The CacheManager</h1>
 
-                    <p><strong>Version:</strong> 7.0.0</p>
+                    <p><strong>Version:</strong> 8.0.0-M1</p>
                 </div>
 
                 
@@ -94,17 +94,17 @@ function addJsClass() {
 <h2 id="cacheManager">2.3 The CacheManager</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails/grails-cache/edit/6.0.x/src/main/docs/guide/usage/cacheManager.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails/grails-cache/edit/8.0.x/src/main/docs/guide/usage/cacheManager.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
 <div class="paragraph">
-<p>The plugin registers an instance of the <a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/cache/CacheManager.html">CacheManager</a> interface as the <code>grailsCacheManager</code> Spring bean, so it&#8217;s easy to access using dependency injection.</p>
+<p>The plugin registers an instance of the <a href="{springApi}/org/springframework/cache/CacheManager.html">CacheManager</a> interface as the <code>grailsCacheManager</code> Spring bean, so it&#8217;s easy to access using dependency injection.</p>
 </div>
 <div class="paragraph">
-<p>The most common method you would call on the <code>grailsCacheManager</code> is <code>getCache(String name)</code> to access a <a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/cache/Cache.html">Cache</a> instance programmatically. This shouldn&#8217;t be needed often however. From the <code>Cache</code> instance you can also access the underlying cache implementation using <code>cache.getNativeCache()</code>.</p>
+<p>The most common method you would call on the <code>grailsCacheManager</code> is <code>getCache(String name)</code> to access a <a href="{springApi}/org/springframework/cache/Cache.html">Cache</a> instance programmatically. This shouldn&#8217;t be needed often however. From the <code>Cache</code> instance you can also access the underlying cache implementation using <code>cache.getNativeCache()</code>.</p>
 </div>
 
 

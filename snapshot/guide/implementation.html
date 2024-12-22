@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>5 Implementation Details 7.0.0</title>
+    <title>5 Implementation Details 8.0.0-M1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -28,7 +28,7 @@ function addJsClass() {
 <div id="navigation">
     <div class="navTitle">
         
-        Cache Plugin
+        Grails Cache Plugin
     </div>
     <div class="navLinks">
         <ul>
@@ -82,7 +82,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>5 Implementation Details</h1>
 
-                    <p><strong>Version:</strong> 7.0.0</p>
+                    <p><strong>Version:</strong> 8.0.0-M1</p>
                 </div>
 
                 
@@ -92,7 +92,7 @@ function addJsClass() {
 <h1 id="implementation">5 Implementation Details</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails/grails-cache/edit/6.0.x/src/main/docs/guide/implementation.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/grails/grails-cache/edit/8.0.x/src/main/docs/guide/implementation.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -105,10 +105,10 @@ function addJsClass() {
 <h2 id="_cache_manager">Cache manager</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The core cache plugin registers a <code>grailsCacheManager</code> Spring bean, and the extension plugins replace this bean with one that creates and manages caches for that implementation. The default implementation is an instance of <a href="../api/grails/plugin/cache/GrailsConcurrentMapCacheManager.html">GrailsConcurrentMapCacheManager</a> which uses <a href="../api/grails/plugin/cache/GrailsConcurrentMapCache.html">GrailsConcurrentMapCache</a> as its cache implementation. It uses a <code>java.util.concurrent.ConcurrentHashMap</code> to store cached values.</p>
+<p>The core cache plugin registers a <code>grailsCacheManager</code> Spring bean, and the extension plugins replace this bean with one that creates and manages caches for that implementation. The default implementation is an instance of <a href="{api}/grails/plugin/cache/GrailsConcurrentMapCacheManager.html">GrailsConcurrentMapCacheManager</a> which uses <a href="{api}/grails/plugin/cache/GrailsConcurrentMapCache.html">GrailsConcurrentMapCache</a> as its cache implementation. It uses a <code>java.util.concurrent.ConcurrentHashMap</code> to store cached values.</p>
 </div>
 <div class="paragraph">
-<p>You can customize the cache manager by replacing the <code>grailsCacheManager</code> Spring bean in <code>resources.groovy</code> with your own; either subclass <a href="../api/grails/plugin/cache/GrailsConcurrentMapCacheManager.html">GrailsConcurrentMapCacheManager</a> (e.g. to override the <code>createConcurrentMapCache()</code> method) or by implementing the <a href="../api/org/grails/plugin/cache/GrailsCacheManager.html">GrailsCacheManager</a> interface.</p>
+<p>You can customize the cache manager by replacing the <code>grailsCacheManager</code> Spring bean in <code>resources.groovy</code> with your own; either subclass <a href="{api}/grails/plugin/cache/GrailsConcurrentMapCacheManager.html">GrailsConcurrentMapCacheManager</a> (e.g. to override the <code>createConcurrentMapCache()</code> method) or by implementing the <a href="{api}/org/grails/plugin/cache/GrailsCacheManager.html">GrailsCacheManager</a> interface.</p>
 </div>
 <div class="sect2">
 <h3 id="_fragment_caching">Fragment caching</h3>
@@ -133,12 +133,12 @@ bar
 <div class="sect2">
 <h3 id="_service_caching">Service caching</h3>
 <div class="paragraph">
-<p>You can cache the return value of a service method by annotating it with <a href="../api/grails/plugin/cache/Cacheable.html">Cacheable</a>.</p>
+<p>You can cache the return value of a service method by annotating it with <a href="{api}/grails/plugin/cache/Cacheable.html">Cacheable</a>.</p>
 </div>
 <div class="sect3">
 <h4 id="_key_generation">Key generation</h4>
 <div class="paragraph">
-<p>The default key generated implements the <a href="../api/grails/plugin/cache/GrailsCacheKeyGenerator.html">GrailsCacheKeyGenerator</a> which provides method for generating keys taking into account:</p>
+<p>The default key generated implements the <a href="{api}/grails/plugin/cache/GrailsCacheKeyGenerator.html">GrailsCacheKeyGenerator</a> which provides method for generating keys taking into account:</p>
 </div>
 <div class="ulist">
 <ul>
