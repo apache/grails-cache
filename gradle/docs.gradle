@@ -42,7 +42,7 @@ configurations {
 dependencies {
     if (configurations.find { it.name == 'documentation' }) {
         documentation 'info.picocli:picocli:3.8.0'
-        documentation "org.fusesource.jansi:jansi:1.18"
+        documentation "org.fusesource.jansi:jansi:2.4.1"
         documentation "jline:jline:2.14.6"
         documentation "com.github.javaparser:javaparser-core:3.15.14"
         documentation "org.codehaus.groovy:groovy:${groovyVersion}"
@@ -59,7 +59,7 @@ subprojects {
 
     dependencies {
         if (configurations.find { it.name == 'documentation' }) {
-            documentation "org.fusesource.jansi:jansi:1.18"
+            documentation "org.fusesource.jansi:jansi:2.4.1"
             documentation "jline:jline:2.14.6"
             documentation "com.github.javaparser:javaparser-core:3.15.14"
             documentation "org.codehaus.groovy:groovy:${groovyVersion}"
