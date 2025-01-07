@@ -44,7 +44,7 @@ dependencies {
         documentation 'info.picocli:picocli:3.8.0'
         documentation "org.fusesource.jansi:jansi:1.18"
         documentation "jline:jline:2.14.6"
-        documentation "com.github.javaparser:javaparser-core:3.15.14"
+        documentation "com.github.javaparser:javaparser-core:3.26.3"
         documentation "org.codehaus.groovy:groovy:${groovyVersion}"
         documentation "org.codehaus.groovy:groovy-ant:$groovyVersion"
         documentation "org.codehaus.groovy:groovy-cli-picocli:$groovyVersion"
@@ -61,7 +61,7 @@ subprojects {
         if (configurations.find { it.name == 'documentation' }) {
             documentation "org.fusesource.jansi:jansi:1.18"
             documentation "jline:jline:2.14.6"
-            documentation "com.github.javaparser:javaparser-core:3.15.14"
+            documentation "com.github.javaparser:javaparser-core:3.26.3"
             documentation "org.codehaus.groovy:groovy:${groovyVersion}"
             documentation "org.codehaus.groovy:groovy-ant:$groovyVersion"
             documentation "org.codehaus.groovy:groovy-dateutil:$groovyVersion"
