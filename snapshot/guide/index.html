@@ -60,8 +60,8 @@
                 <div class="project">
                     <h1>Grails Cache Plugin</h1>
                     <p></p>
-                    <p>&quot;Provides AST transformations for caching method calls&quot;</p>
-                    <p><strong>Version:</strong> 8.0.0-M2</p>
+                    <p>Provides AST transformations for caching method calls</p>
+                    <p><strong>Version:</strong> 8.0.0-SNAPSHOT</p>
 
                 </div>
                 
@@ -111,10 +111,10 @@
 <table>
 <tr>
 <td class="icon">
-<img src="../img/icons/important.icons" alt="Important">
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-Cache version 4.0.0 and higher requires GORM 6.1.x or higher
+Cache version 8.0.0 and higher requires Grails 7 or later.
 </td>
 </tr>
 </table>
@@ -133,7 +133,7 @@ Cache version 4.0.0 and higher requires GORM 6.1.x or higher
 <div class="sect2">
 <h3 id="changeLog">Change log</h3>
 <div class="paragraph">
-<p>For recent versions please check the release notes <a href="https://github.com/grails-plugins/grails-cache/releases">here</a></p>
+<p>For later versions please check the release notes <a href="https://github.com/grails-plugins/grails-cache/releases">here</a></p>
 </div>
 </div>
 <div class="sect2">
@@ -224,9 +224,9 @@ annotate methods (either in Spring beans (typically Grails services)) to be cach
 You can also wrap GSP sections in cache tags and render cached templates.</p>
 </div>
 <div class="paragraph">
-<p>There are three annotations; <a href="{api}/grails/plugin/cache/Cacheable.html">Cacheable</a>,
-<a href="{api}/grails/plugin/cache/CachePut.html">CachePut</a>,
-and <a href="{api}/grails/plugin/cache/CacheEvict.html">CacheEvict</a>. You use
+<p>There are three annotations; <a href="../api/grails/plugin/cache/Cacheable.html">Cacheable</a>,
+<a href="../api/grails/plugin/cache/CachePut.html">CachePut</a>,
+and <a href="../api/grails/plugin/cache/CacheEvict.html">CacheEvict</a>. You use
 <code>Cacheable</code> to mark a method as one that should check the cache for a
 pre-existing result, or generate a new result and cache it. Use <code>CachePut</code> to
 mark a method as one that should always be evaluated and store its result in the
@@ -311,7 +311,7 @@ supported options in the cache configuration.</p>
 <table>
 <tr>
 <td class="icon">
-<img src="../img/icons/warning.icons" alt="Warning">
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 Since there is no way to configure "time to live" with this plugin, all
@@ -357,7 +357,7 @@ you can add the <code>maxCapacity</code> parameter to the cache config. Default 
 
 
 <div class="paragraph">
-<p>The <a href="{api}/grails/plugin/cache/Cacheable.html">Cacheable</a> and <a href="{api}/grails/plugin/cache/CacheEvict.html">CacheEvict</a> annotations provided by the plugin have counterparts with the same names provided by Spring.</p>
+<p>The <a href="../api/grails/plugin/cache/Cacheable.html">Cacheable</a> and <a href="../api/grails/plugin/cache/CacheEvict.html">CacheEvict</a> annotations provided by the plugin have counterparts with the same names provided by Spring.</p>
 </div>
 <div class="paragraph">
 <p>However, unlike the Spring versions, these apply AST transformations, avoiding the need to create runtime proxies.</p>
@@ -514,12 +514,49 @@ method is invoked.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::{sourcedir}/grails-app/services/com/demo/BasicCachingService.groovy[tags=get_data,indent=<span class="integer">0</span>]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="annotation">@CompileStatic</span>
+<span class="type">class</span> <span class="class">BasicCachingService</span> {
+
+    <span class="directive">private</span> <span class="type">int</span> invocationCounter = <span class="integer">0</span>
+    <span class="directive">private</span> <span class="type">int</span> conditionalInvocationCounter = <span class="integer">0</span>
+
+    <span class="keyword">def</span> <span class="function">getInvocationCounter</span>() {
+        invocationCounter
+    }
+
+    <span class="annotation">@Cacheable</span>(<span class="string"><span class="delimiter">'</span><span class="content">basic</span><span class="delimiter">'</span></span>)
+    <span class="keyword">def</span> <span class="function">getData</span>() {
+        ++invocationCounter
+        <span class="string"><span class="delimiter">'</span><span class="content">Hello World!</span><span class="delimiter">'</span></span>
+    }
+}</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::{sourcedir}/src/test/groovy/com/demo/BasicCachingServiceNoCacheManagerSpec.groovy<span class="type">[]</span></code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> com.demo
+
+<span class="keyword">import</span> <span class="include">grails.testing.services.ServiceUnitTest</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+
+<span class="type">class</span> <span class="class">BasicCachingServiceNoCacheManagerSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ServiceUnitTest&lt;BasicCachingService&gt; {
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">'</span><span class="content">test invoking cacheable method when no cache manager is present</span><span class="delimiter">'</span></span>() {
+        <span class="key">when</span>: <span class="string"><span class="delimiter">'</span><span class="content">a cached method is invoked the first time</span><span class="delimiter">'</span></span>
+        <span class="keyword">def</span> result = service.getData()
+
+        <span class="key">then</span>: <span class="string"><span class="delimiter">'</span><span class="content">the code in the method is executed</span><span class="delimiter">'</span></span>
+        result == <span class="string"><span class="delimiter">'</span><span class="content">Hello World!</span><span class="delimiter">'</span></span>
+        service.invocationCounter == <span class="integer">1</span>
+
+        <span class="key">when</span>: <span class="string"><span class="delimiter">'</span><span class="content">a cached method is invoked the second time</span><span class="delimiter">'</span></span>
+        result = service.getData()
+
+        <span class="key">then</span>: <span class="string"><span class="delimiter">'</span><span class="content">the code in the method is still executed because no cache manager is present</span><span class="delimiter">'</span></span>
+        result == <span class="string"><span class="delimiter">'</span><span class="content">Hello World!</span><span class="delimiter">'</span></span>
+        service.invocationCounter == <span class="integer">2</span>
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -529,7 +566,67 @@ test.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">Unresolved directive <span class="keyword">in</span> &lt;stdin&gt; - <span class="key">include</span>::{sourcedir}/src/test/groovy/com/demo/BasicCachingServiceSpec.groovy<span class="type">[]</span></code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> com.demo
+
+<span class="keyword">import</span> <span class="include">grails.plugin.cache.CustomCacheKeyGenerator</span>
+<span class="keyword">import</span> <span class="include">grails.plugin.cache.GrailsConcurrentMapCacheManager</span>
+<span class="keyword">import</span> <span class="include">grails.testing.services.ServiceUnitTest</span>
+<span class="keyword">import</span> <span class="include">spock.lang.Specification</span>
+
+<span class="type">class</span> <span class="class">BasicCachingServiceSpec</span> <span class="directive">extends</span> Specification <span class="directive">implements</span> ServiceUnitTest&lt;BasicCachingService&gt; {
+
+    <span class="annotation">@Override</span>
+    Closure doWithSpring() {{ -&gt;
+        grailsCacheManager(GrailsConcurrentMapCacheManager)
+        customCacheKeyGenerator(CustomCacheKeyGenerator)
+    }}
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">'</span><span class="content">test invoking cacheable method when cache manager is present</span><span class="delimiter">'</span></span>() {
+        <span class="key">when</span>: <span class="string"><span class="delimiter">'</span><span class="content">a cached method is invoked the first time</span><span class="delimiter">'</span></span>
+        <span class="keyword">def</span> result = service.getData()
+
+        <span class="key">then</span>: <span class="string"><span class="delimiter">'</span><span class="content">the code in the method is executed</span><span class="delimiter">'</span></span>
+        result == <span class="string"><span class="delimiter">'</span><span class="content">Hello World!</span><span class="delimiter">'</span></span>
+        service.invocationCounter == <span class="integer">1</span>
+
+        <span class="key">when</span>: <span class="string"><span class="delimiter">'</span><span class="content">a cached method is invoked the second time</span><span class="delimiter">'</span></span>
+        result = service.getData()
+
+        <span class="key">then</span>: <span class="string"><span class="delimiter">'</span><span class="content">the cached return value is returned and the code in the method is not executed</span><span class="delimiter">'</span></span>
+        result == <span class="string"><span class="delimiter">'</span><span class="content">Hello World!</span><span class="delimiter">'</span></span>
+        service.invocationCounter == <span class="integer">1</span>
+    }
+
+    <span class="type">void</span> <span class="string"><span class="delimiter">'</span><span class="content">test invoking a cacheable method that expresses a condition</span><span class="delimiter">'</span></span>() {
+        <span class="key">when</span>: <span class="string"><span class="delimiter">'</span><span class="content">multiply is called with x &lt; 10</span><span class="delimiter">'</span></span>
+        <span class="keyword">def</span> result = service.multiply(<span class="integer">4</span>, <span class="integer">7</span>)
+
+        <span class="key">then</span>: <span class="string"><span class="delimiter">'</span><span class="content">the method should have been invoked</span><span class="delimiter">'</span></span>
+        result == <span class="integer">28</span>
+        service.conditionalInvocationCounter == <span class="integer">1</span>
+
+        <span class="key">when</span>: <span class="string"><span class="delimiter">'</span><span class="content">the method is invoked with x &gt; 10</span><span class="delimiter">'</span></span>
+        result = service.multiply(<span class="integer">40</span>, <span class="integer">7</span>)
+
+        <span class="key">then</span>: <span class="string"><span class="delimiter">'</span><span class="content">the method should have executed</span><span class="delimiter">'</span></span>
+        result == <span class="integer">280</span>
+        service.conditionalInvocationCounter == <span class="integer">2</span>
+
+        <span class="key">when</span>: <span class="string"><span class="delimiter">'</span><span class="content">multiply is called with x &lt; 10 with a cached value</span><span class="delimiter">'</span></span>
+        result = service.multiply(<span class="integer">4</span>, <span class="integer">7</span>)
+
+        <span class="key">then</span>: <span class="string"><span class="delimiter">'</span><span class="content">the method should not have executed</span><span class="delimiter">'</span></span>
+        result == <span class="integer">28</span>
+        service.conditionalInvocationCounter == <span class="integer">2</span>
+
+        <span class="key">when</span>: <span class="string"><span class="delimiter">'</span><span class="content">the method is invoked with x &gt; 10 again</span><span class="delimiter">'</span></span>
+        result = service.multiply(<span class="integer">40</span>, <span class="integer">7</span>)
+
+        <span class="key">then</span>: <span class="string"><span class="delimiter">'</span><span class="content">the condition should prevent caching</span><span class="delimiter">'</span></span>
+        result == <span class="integer">280</span>
+        service.conditionalInvocationCounter == <span class="integer">3</span>
+    }
+}</code></pre>
 </div>
 </div>
 
@@ -544,10 +641,10 @@ test.</p>
 
 
 <div class="paragraph">
-<p>The plugin registers an instance of the <a href="{springApi}/org/springframework/cache/CacheManager.html">CacheManager</a> interface as the <code>grailsCacheManager</code> Spring bean, so it&#8217;s easy to access using dependency injection.</p>
+<p>The plugin registers an instance of the <a href="https://docs.spring.io/spring/docs/6.2.2/javadoc-api//org/springframework/cache/CacheManager.html">CacheManager</a> interface as the <code>grailsCacheManager</code> Spring bean, so it&#8217;s easy to access using dependency injection.</p>
 </div>
 <div class="paragraph">
-<p>The most common method you would call on the <code>grailsCacheManager</code> is <code>getCache(String name)</code> to access a <a href="{springApi}/org/springframework/cache/Cache.html">Cache</a> instance programmatically. This shouldn&#8217;t be needed often however. From the <code>Cache</code> instance you can also access the underlying cache implementation using <code>cache.getNativeCache()</code>.</p>
+<p>The most common method you would call on the <code>grailsCacheManager</code> is <code>getCache(String name)</code> to access a <a href="https://docs.spring.io/spring/docs/6.2.2/javadoc-api//org/springframework/cache/Cache.html">Cache</a> instance programmatically. This shouldn&#8217;t be needed often however. From the <code>Cache</code> instance you can also access the underlying cache implementation using <code>cache.getNativeCache()</code>.</p>
 </div>
 
 
@@ -564,7 +661,7 @@ test.</p>
 <p>The plugin provides GSP tags which are useful for caching the result of evaluating sections of markup.  These tags allow for the result of evaluating sections of markup to be cached so subsequent renderings of the same markup do not have to result in the markup being evaluated again.  These tags support automatic cache eviction with the use of a time to live (ttl) attribute.</p>
 </div>
 <div class="paragraph">
-<p>See the documentation for the <a href="{tags}/block.html">block</a> and <a href="{tags}/render.html">render</a> tags for more details.</p>
+<p>See the documentation for the <a href="../ref/Tags/block.html">block</a> and <a href="../ref/Tags/render.html">render</a> tags for more details.</p>
 </div>
 
 
@@ -578,7 +675,7 @@ test.</p>
 
 
 <div class="paragraph">
-<p>The plugin provides a service named <a href="{api}/grails/plugin/cache/GrailsCacheAdminService.html">GrailsCacheAdminService</a> which support various methods for administering caches.</p>
+<p>The plugin provides a service named <a href="../api/grails/plugin/cache/GrailsCacheAdminService.html">GrailsCacheAdminService</a> which support various methods for administering caches.</p>
 </div>
 
 
@@ -592,7 +689,7 @@ test.</p>
 
 
 <div class="paragraph">
-<p>There are methods in <a href="{api}/grails/plugin/cache/GrailsCacheAdminService.html">GrailsCacheAdminService</a> for clearing the caches used by the <a href="{tags}/block.html">block</a> and <a href="{tags}/render.html">render</a> tags.</p>
+<p>There are methods in <a href="../api/grails/plugin/cache/GrailsCacheAdminService.html">GrailsCacheAdminService</a> for clearing the caches used by the <a href="../ref/Tags/block.html">block</a> and <a href="../ref/Tags/render.html">render</a> tags.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -630,10 +727,10 @@ test.</p>
 <h2 id="_cache_manager">Cache manager</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The core cache plugin registers a <code>grailsCacheManager</code> Spring bean, and the extension plugins replace this bean with one that creates and manages caches for that implementation. The default implementation is an instance of <a href="{api}/grails/plugin/cache/GrailsConcurrentMapCacheManager.html">GrailsConcurrentMapCacheManager</a> which uses <a href="{api}/grails/plugin/cache/GrailsConcurrentMapCache.html">GrailsConcurrentMapCache</a> as its cache implementation. It uses a <code>java.util.concurrent.ConcurrentHashMap</code> to store cached values.</p>
+<p>The core cache plugin registers a <code>grailsCacheManager</code> Spring bean, and the extension plugins replace this bean with one that creates and manages caches for that implementation. The default implementation is an instance of <a href="../api/grails/plugin/cache/GrailsConcurrentMapCacheManager.html">GrailsConcurrentMapCacheManager</a> which uses <a href="../api/grails/plugin/cache/GrailsConcurrentMapCache.html">GrailsConcurrentMapCache</a> as its cache implementation. It uses a <code>java.util.concurrent.ConcurrentHashMap</code> to store cached values.</p>
 </div>
 <div class="paragraph">
-<p>You can customize the cache manager by replacing the <code>grailsCacheManager</code> Spring bean in <code>resources.groovy</code> with your own; either subclass <a href="{api}/grails/plugin/cache/GrailsConcurrentMapCacheManager.html">GrailsConcurrentMapCacheManager</a> (e.g. to override the <code>createConcurrentMapCache()</code> method) or by implementing the <a href="{api}/org/grails/plugin/cache/GrailsCacheManager.html">GrailsCacheManager</a> interface.</p>
+<p>You can customize the cache manager by replacing the <code>grailsCacheManager</code> Spring bean in <code>resources.groovy</code> with your own; either subclass <a href="../api/grails/plugin/cache/GrailsConcurrentMapCacheManager.html">GrailsConcurrentMapCacheManager</a> (e.g. to override the <code>createConcurrentMapCache()</code> method) or by implementing the <a href="../api/org/grails/plugin/cache/GrailsCacheManager.html">GrailsCacheManager</a> interface.</p>
 </div>
 <div class="sect2">
 <h3 id="_fragment_caching">Fragment caching</h3>
@@ -658,12 +755,12 @@ bar
 <div class="sect2">
 <h3 id="_service_caching">Service caching</h3>
 <div class="paragraph">
-<p>You can cache the return value of a service method by annotating it with <a href="{api}/grails/plugin/cache/Cacheable.html">Cacheable</a>.</p>
+<p>You can cache the return value of a service method by annotating it with <a href="../api/grails/plugin/cache/Cacheable.html">Cacheable</a>.</p>
 </div>
 <div class="sect3">
 <h4 id="_key_generation">Key generation</h4>
 <div class="paragraph">
-<p>The default key generated implements the <a href="{api}/grails/plugin/cache/GrailsCacheKeyGenerator.html">GrailsCacheKeyGenerator</a> which provides method for generating keys taking into account:</p>
+<p>The default key generated implements the <a href="../api/grails/plugin/cache/GrailsCacheKeyGenerator.html">GrailsCacheKeyGenerator</a> which provides method for generating keys taking into account:</p>
 </div>
 <div class="ulist">
 <ul>

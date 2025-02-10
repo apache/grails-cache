@@ -1,3 +1,5 @@
+cache
 grails.plugin.cache
 grails.plugin.cache.util
 org.grails.plugin.cache
+org.grails.plugin.cache.compiler
