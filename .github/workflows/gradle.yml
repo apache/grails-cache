@@ -31,7 +31,7 @@ jobs:
           GITHUB_MAVEN_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         run: ./gradlew build --refresh-dependencies
   publish:
-    if: github.event_name == 'push'
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
     needs: build
     runs-on: ubuntu-latest
     permissions:
@@ -58,7 +58,7 @@ jobs:
           MAVEN_PUBLISH_URL: ${{ secrets.MAVEN_PUBLISH_SNAPSHOT_URL }}
         run: ./gradlew publish
   docs:
-    if: github.event_name == 'push'
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
     needs: build
     runs-on: ubuntu-latest
     permissions:
