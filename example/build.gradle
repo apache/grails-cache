@@ -24,7 +24,7 @@ apply plugin: "org.grails.grails-gsp"
 compileJava.options.release = 17
 
 dependencies {
-    implementation "org.grails:grails-bom:${grailsVersion}"
+    implementation platform("org.grails:grails-bom:$grailsVersion")
 
     implementation project(':plugin')
 
