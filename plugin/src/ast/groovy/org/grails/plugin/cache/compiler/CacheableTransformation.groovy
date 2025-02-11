@@ -17,6 +17,7 @@ package org.grails.plugin.cache.compiler
 
 import grails.plugin.cache.Cacheable
 import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
 import org.codehaus.groovy.ast.AnnotationNode
 import org.codehaus.groovy.ast.ClassNode
 import org.codehaus.groovy.ast.MethodNode
@@ -27,6 +28,7 @@ import org.codehaus.groovy.ast.stmt.BlockStatement
 import org.codehaus.groovy.control.CompilePhase
 import org.codehaus.groovy.control.SourceUnit
 import org.codehaus.groovy.transform.GroovyASTTransformation
+import org.grails.core.artefact.ControllerArtefactHandler
 import org.springframework.cache.Cache
 
 import static org.codehaus.groovy.ast.ClassHelper.*
@@ -38,6 +40,7 @@ import static org.grails.datastore.gorm.transform.AstMethodDispatchUtils.*
  * @author Jeff Brown
  * @author Graeme Rocher
  */
+@Slf4j
 @GroovyASTTransformation(phase = CompilePhase.SEMANTIC_ANALYSIS)
 @CompileStatic
 class CacheableTransformation extends AbstractCacheTransformation {
@@ -52,6 +55,11 @@ class CacheableTransformation extends AbstractCacheTransformation {
 
     @Override
     protected Expression buildDelegatingMethodCall(SourceUnit sourceUnit, AnnotationNode annotationNode, ClassNode classNode, MethodNode methodNode, MethodCallExpression originalMethodCallExpr, BlockStatement newMethodBody) {
+        boolean isControllerClass = classNode.name.endsWith(ControllerArtefactHandler.TYPE)
+        if(isControllerClass) {
+            log.warn("@Cacheable is not supported on controller methods. Ignoring method: ${methodNode.name}")
+            return originalMethodCallExpr
+        }
 
         VariableExpression cacheManagerVariableExpression = varX(GRAILS_CACHE_MANAGER_PROPERTY_NAME)
         handleCacheCondition(sourceUnit, annotationNode,  methodNode, originalMethodCallExpr, newMethodBody)
