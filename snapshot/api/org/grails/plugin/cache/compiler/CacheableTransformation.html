@@ -101,7 +101,8 @@ if (location.href.indexOf('is-external=true') == -1) {
             <!-- todo: direct known subclasses -->
             <hr>
 
-<pre>@org.codehaus.groovy.transform.GroovyASTTransformation(phase: CompilePhase.SEMANTIC_ANALYSIS)
+<pre>@groovy.util.logging.Slf4j
+@org.codehaus.groovy.transform.GroovyASTTransformation(phase: CompilePhase.SEMANTIC_ANALYSIS)
 @groovy.transform.CompileStatic
 class CacheableTransformation
 extends <a href='../../../../../org/grails/plugin/cache/compiler/AbstractCacheTransformation.html'>AbstractCacheTransformation</a></pre>
