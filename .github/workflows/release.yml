@@ -52,6 +52,7 @@ jobs:
           GRAILS_PUBLISH_RELEASE: 'true'
         run: >
           ./gradlew
+          --no-build-cache
           -Psigning.secretKeyRingFile=${{ github.workspace }}/secring.gpg 
           publishToSonatype 
           closeSonatypeStagingRepository
@@ -86,6 +87,7 @@ jobs:
           GRAILS_PUBLISH_RELEASE: 'true'
         run: >
           ./gradlew
+          --no-build-cache
           findSonatypeStagingRepository
           releaseSonatypeStagingRepository
       - name: "⚙️ Run post-release"
