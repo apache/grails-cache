@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"grails.plugin.cache"},{"l":"grails.plugin.cache.util"},{"l":"org.grails.plugin.cache"}]
