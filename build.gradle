@@ -47,7 +47,7 @@ subprojects {
 
         apply plugin:"org.apache.grails.gradle.grails-publish"
         grailsPublish {
-            artifactId = 'cache'
+            artifactId = 'grails-cache'
             githubSlug = "apache/grails-cache"
             license {
                 name = 'Apache-2.0'
