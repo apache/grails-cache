@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         maven { url = 'https://repo.grails.org/grails/core' }
+        maven { url = 'https://repository.apache.org/content/repositories/snapshots' }
         if (System.getenv("GITHUB_MAVEN_PASSWORD") && !grailsVersion.endsWith('-SNAPSHOT')) {
             System.out.println("Adding Grails Core Repo")
             maven {
@@ -13,36 +14,36 @@ buildscript {
         }
     }
     dependencies {
-        classpath platform("org.grails:grails-bom:$grailsVersion")
-        classpath 'org.grails:grails-gradle-plugin'
+        classpath platform("org.apache.grails:grails-bom:$grailsVersion")
+        classpath 'org.apache.grails:grails-gradle-plugins'
     }
 }
 
 version = projectVersion
-group = "org.grails.plugins"
+group = "org.apache.grails"
 
 apply plugin: 'groovy'
 apply plugin: 'java-library'
 
-apply plugin: 'org.grails.grails-plugin'
+apply plugin: 'org.apache.grails.gradle.grails-plugin'
 
 dependencies {
-    implementation platform("org.grails:grails-bom:$grailsVersion")
+    implementation platform("org.apache.grails:grails-bom:$grailsVersion")
 
-    api "org.grails:grails-core"
-    api "org.grails:grails-web-boot"
-    api "org.grails:grails-plugin-services"
+    api "org.apache.grails:grails-core"
+    api "org.apache.grails.web:grails-web-boot"
+    api "org.apache.grails:grails-services"
 
-    api "org.grails.plugins:gsp"
+    api "org.apache.grails:grails-gsp"
     api "org.codehaus.gpars:gpars:$gparsVersion"
     api "com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru:$concurrentlinkedhashmapLruVersion"
 
-    compileOnly "org.grails:grails-plugin-domain-class"
+    compileOnly "org.apache.grails:grails-domain-class"
 
-    console "org.grails:grails-console"
+    console "org.apache.grails:grails-console"
 
-    testImplementation "org.grails:grails-gorm-testing-support"
-    testImplementation "org.grails:grails-web-testing-support"
+    testImplementation "org.apache.grails:grails-testing-support-datamapping"
+    testImplementation "org.apache.grails:grails-testing-support-web"
     testImplementation "org.spockframework:spock-core", {
         exclude group: 'org.apache.groovy'
     }

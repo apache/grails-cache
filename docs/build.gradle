@@ -3,6 +3,7 @@ import grails.doc.gradle.PublishGuide
 buildscript {
     repositories {
         maven { url = 'https://repo.grails.org/grails/core' }
+        maven { url = 'https://repository.apache.org/content/repositories/snapshots' }
         if (System.getenv("GITHUB_MAVEN_PASSWORD") && !grailsVersion.endsWith('-SNAPSHOT')) {
             System.out.println("Adding Grails Core Repo")
             maven {
@@ -15,14 +16,14 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.grails:grails-docs:$grailsVersion"
+        classpath "org.apache.grails:grails-docs-core:$grailsVersion"
     }
 }
 
 apply plugin: 'groovy'
 
 dependencies {
-    implementation platform("org.grails:grails-bom:$grailsVersion")
+    implementation platform("org.apache.grails:grails-bom:$grailsVersion")
     implementation 'org.apache.groovy:groovy-groovydoc'
     implementation 'org.apache.groovy:groovy-ant'
     implementation 'org.springframework:spring-core'
