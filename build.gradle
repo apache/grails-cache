@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         maven { url "https://repo.grails.org/grails/core" }
+        maven { url = 'https://repository.apache.org/content/repositories/snapshots' }
         if (System.getenv("GITHUB_MAVEN_PASSWORD") && !grailsVersion.endsWith('-SNAPSHOT')) {
             System.out.println("Adding Grails Core Repo")
             maven {
@@ -13,7 +14,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath platform("org.grails:grails-bom:$grailsVersion")
+        classpath platform("org.apache.grails:grails-bom:$grailsVersion")
         classpath "org.grails:grails-gradle-plugin"
     }
 }
@@ -22,6 +23,7 @@ allprojects {
     repositories {
         mavenCentral()
         maven { url "https://repo.grails.org/grails/core" }
+        maven { url = 'https://repository.apache.org/content/repositories/snapshots' }
         if (System.getenv("GITHUB_MAVEN_PASSWORD") && !grailsVersion.endsWith('-SNAPSHOT')) {
             System.out.println("Adding Grails Core Repo")
             maven {
@@ -35,18 +37,18 @@ allprojects {
     }
 }
 
-group = "org.grails.plugins"
+group = "org.apache.grails"
 version = project.projectVersion
 
 subprojects {
     if(project.name == 'plugin') {
         version = projectVersion
-        group = "org.grails.plugins"
+        group = "org.apache.grails"
 
         apply plugin:"org.grails.grails-publish"
         grailsPublish {
             artifactId = 'cache'
-            githubSlug = "grails/grails-cache"
+            githubSlug = "apache/grails-cache"
             license {
                 name = 'Apache-2.0'
             }
