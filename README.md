@@ -1,9 +1,9 @@
-[![Java CI](https://github.com/grails/grails-cache/actions/workflows/gradle.yml/badge.svg)](https://github.com/grails/grails-cache/actions/workflows/gradle.yml)
+[![Java CI](https://github.com/apache/grails-cache/actions/workflows/gradle.yml/badge.svg)](https://github.com/apache/grails-cache/actions/workflows/gradle.yml)
 
 Grails Cache Plugin
 ============
 
-See [documentation](https://grails.github.io/grails-cache/) for further information.
+See [documentation](https://apache.github.io/grails-cache/) for further information.
 
 ## Branches
 
